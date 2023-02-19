@@ -12,13 +12,23 @@ void solve() {
     vector<int> a;
     int b;
     int ans = INT_MIN;
-    int temp = 0;
+    int count = 0;
+    unordered_set<int> s;
 
     cin >> n;
 
     for (int i = 0; i < n; i++) {
         cin >> b;
         a.push_back(b);
+    }
+
+    for (int i = 0; i < a.size(); i++) {
+        s.insert(a[i]);
+    }
+
+    if (s.size() == 1) {
+        cout << 1 << endl;
+        return;
     }
 
     if (a.size() < 2) {
@@ -36,18 +46,18 @@ void solve() {
         }
     }
 
-    for (int i = 0; i < a.size() - 1; i++) {
-        temp = 1;
-        int current = i;
-
-            while (a[current + 1] > a[current] && current < a.size() - 1) {
-                temp++;
-                current++;
+    for (int i = 0; i < a.size(); i++) {
+        count++;
+        if (a[i] >= a[i+1]) {
+            if (count > ans) {
+                ans = count;
             }
-
-        if (temp > ans) {
-            ans = temp;
+            count = 0;
         }
+    }
+
+    if (count > ans) {
+        ans = count;
     }
 
     cout << ans << endl;
